@@ -5,7 +5,6 @@ import interfaces.ChatUpdateI
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import vue.ChatIHM
-import vue.Temp
 
 
 fun main(): Unit = runBlocking {
@@ -15,8 +14,6 @@ fun main(): Unit = runBlocking {
 }
 
 class ChatControler : ChatEventI {
-
-    val tp = Temp()
 
     //On créer l'interface graphique en donnant la référence du controleur
     val ihm: ChatUpdateI = ChatIHM(this)
