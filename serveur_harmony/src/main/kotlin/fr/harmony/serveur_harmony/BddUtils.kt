@@ -1,10 +1,15 @@
 package fr.harmony.serveur_harmony
 
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 
 var listMsgs: ArrayList<MsgBean> = ArrayList()
 var listUser: ArrayList<UserBean> = ArrayList()
+
+val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss") // SimpleDateFormat
 
 //Recherche le même nom de user, puis compare les mot de passe des deux Users
 //Si bon mot de passe -> true
@@ -49,4 +54,8 @@ fun checkLoginDoublon(user: UserBean): Boolean {
 //TODO vérifier que l'Id Session n'existe pas déjà sur un autre utilisateur
 fun randomIdSession(): Long {
     return Random.nextLong()
+}
+
+fun getCurrentDate(): String {
+    return sdf.format(Date())
 }

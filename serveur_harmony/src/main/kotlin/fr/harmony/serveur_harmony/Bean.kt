@@ -6,7 +6,7 @@ import fr.harmony.serveur_harmony.ResponseApiEnumBean.OK
 data class UserBean(val id: Int? = null, var login: String?, var pwd: String?, var idSession: Long? = null)
 
 //Class MsgBean
-data class MsgBean(val id: Int? = null, val text: String, var date: Long? = null, val user: UserBean)
+data class MsgBean(val id: Int? = null, val text: String, var date: String? = null, val user: UserBean)
 
 //Class ResponseApiBean
 data class ResponseApiBean(val code: Int, val msg: String)
