@@ -6,7 +6,6 @@ var listUser: ArrayList<UserBean> = ArrayList()
 
 //Recherche le même nom de user, puis compare les mot de passe des deux Users
 fun checkPwd(user: UserBean): Boolean? {
-
     val userCompare = listUser.find { it.login == user.login && it.pwd == user.pwd }
 
     if (userCompare != null) return userCompare.pwd == user.pwd

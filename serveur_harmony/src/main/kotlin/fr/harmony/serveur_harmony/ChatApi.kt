@@ -18,31 +18,31 @@ class ChatApi {
 
     //Enregistre un nouvel utilisateur et retourne un ResponseApiBean en réponse
     @PostMapping("/register")
-    fun register(@RequestBody user: UserBean) : ResponseApiBean {
+    fun register(@RequestBody user: UserBean): DataPackaged {
 
         println("Tentative d'enregistrement...")
-
         if (checkLoginDoublon(user)) {
-            return ResponseApiBean(504, "Erreur, login déjà existant, choisissez un autre login")
+            return DataPackaged(ResponseApiEnumBean.ERR_EXIST_LOG.rab)
         }
         //Ajoute l'user dans la base de données
         else {
             addUser(user)
-            return ResponseApiBean(200, "Vous avez bien été enregistrer")
+            return DataPackaged(ResponseApiEnumBean.OK.rab)
         }
-
     }
 
+    @PostMapping("/login")
     fun login(user: UserBean) {
         //TODO
     }
+
     fun receiveMsg(msg: MsgBean) {
         //TODO
     }
+
     fun sendListMsg() {
         //TODO
     }
-
 
 
 }
