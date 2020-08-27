@@ -7,11 +7,9 @@ import model.ResponseApiEnumBean.*
 fun register(user:UserBean){
     var json = Gson().toJson(user, UserBean::class.java)
     json = sendPostOkHttpRequest(URL_SERV_REGISTER, json)
-    val receivedPure= Gson().fromJson(json,DataPackaged::class.java)
-    val receivedTreated= receivedPure.getTheOne()
-
-    if(receivedTreated !is UserBean){
-        throw Exception((receivedPure.getRab()).msg)
+    val receivedPure= (Gson().fromJson(json,DataPackaged::class.java)).getRab()
+    if(receivedPure.code !in 200..299){
+        throw Exception((receivedPure.msg))
     }
 
 }
