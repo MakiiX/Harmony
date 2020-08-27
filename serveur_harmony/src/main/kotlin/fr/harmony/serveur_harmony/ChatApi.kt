@@ -31,9 +31,25 @@ class ChatApi {
         }
     }
 
+    //Connecte l'utilisateur et lui reconnais un idSession
     @PostMapping("/login")
-    fun login(user: UserBean) {
-        //TODO
+    fun login(@RequestBody user: UserBean): DataPackaged {
+        println("Tentative de connexion..")
+
+        val check = checkPwd(user)
+
+        //Vérifie si le nom user est bien déjà enregistrer
+        if (check == null) return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_USER.rab)
+
+        //Vérifie le mot de passe
+        else if (check == false) return DataPackaged(ResponseApiEnumBean.ERR_WRONG_PWD.rab)
+
+        //Retour positif, retourne l'User avec son IdSession
+        else {
+            val userOnList = listUser.find { it.login == user.login && it.pwd == user.pwd }
+            userOnList!!.idSession = randomIdSession()
+            return DataPackaged(ResponseApiEnumBean.OK.rab, userOnList)
+        }
     }
 
     fun receiveMsg(msg: MsgBean) {

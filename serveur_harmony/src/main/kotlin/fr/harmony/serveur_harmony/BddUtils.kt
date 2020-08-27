@@ -1,10 +1,15 @@
 package fr.harmony.serveur_harmony
 
+import kotlin.random.Random
+
 
 var listMsgs: ArrayList<MsgBean> = ArrayList()
 var listUser: ArrayList<UserBean> = ArrayList()
 
 //Recherche le même nom de user, puis compare les mot de passe des deux Users
+//Si bon mot de passe -> true
+//Si mauvais mot de passe -> false
+//Si pas de user reconnue -> null
 fun checkPwd(user: UserBean): Boolean? {
     val userCompare = listUser.find { it.login == user.login && it.pwd == user.pwd }
 
@@ -21,7 +26,6 @@ fun addMsg(msg: MsgBean) {
 }
 
 fun getUserBySession(userIdSession: Long): UserBean? {
-
     for (user in listUser) {
         if (user.idSession == userIdSession) return user
     }
@@ -39,4 +43,10 @@ fun checkLoginDoublon(user: UserBean): Boolean {
             return true
     }
     return false
+}
+
+//Crée un idSession aléatoirement
+//TODO vérifier que l'Id Session n'existe pas déjà sur un autre utilisateur
+fun randomIdSession(): Long {
+    return Random.nextLong()
 }
