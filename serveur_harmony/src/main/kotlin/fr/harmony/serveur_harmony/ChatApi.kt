@@ -31,7 +31,6 @@ class ChatApi {
             e.printStackTrace()
             return DataPackaged(ResponseApiEnumBean.ERR_UNKNOWN_ERR.rab)
         }
-
     }
 
     //Connecte l'utilisateur et lui reconnais un idSession
@@ -40,7 +39,6 @@ class ChatApi {
         println("/login \nuser: $user")
 
         try {
-
             val check = checkPwd(user)
 
             //Vérifie si le nom user est bien déjà enregistrer
@@ -87,7 +85,6 @@ class ChatApi {
             e.printStackTrace()
             return DataPackaged(ResponseApiEnumBean.ERR_UNKNOWN_ERR.rab)
         }
-
     }
 
     //Retourne un DataPackaged avec la liste des messages

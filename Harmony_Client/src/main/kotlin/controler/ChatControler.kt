@@ -22,7 +22,7 @@ class ChatControler : ChatEventI {
 
 
     /* -------------------------------- */
-    // Evenement de l'interface graphique
+    // Évènement de l'interface graphique
     /* -------------------------------- */
     /**
      * Un clic sur le bouton envoyer à eu lieu
