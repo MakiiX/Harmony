@@ -24,7 +24,7 @@ public enum class ResponseApiEnumBean(val rab: ResponseApiBean) {
     ERR_EXIST_LOG(ResponseApiBean(301, "Login already used")),
     ERR_UNKNOWN_USER(ResponseApiBean(304, "User unknown")),
     ERR_WRONG_PWD(ResponseApiBean(305, "Wrong Password")),
-    ERR_UNKNOWN_ERR(ResponseApiBean(306, "Erreur inconnue"))
+    ERR_UNKNOWN_ERR(ResponseApiBean(306, "Unknown error"))
 }
 
 class MyException(val responseApiBean: ResponseApiBean) : Exception(responseApiBean.msg)
