@@ -2,7 +2,7 @@ package model
 import model.ResponseApiEnumBean.*
 
 //Class UserBean
-data class UserBean(val id : Int?=null, var login: String?=null, private  var pwd : String?=null, var idSession : Long? = null)
+data class UserBean(val id : Int?=null, var login: String?=null, var pwd : String?=null, var idSession : Long? = null)
 
 //Class MsgBean
 data class MsgBean(val id : Int?=null, val text: String, var date: Long? = null, val user: UserBean)

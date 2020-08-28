@@ -1,6 +1,6 @@
 package model
 
-fun List<MsgBean>.toString():String{
+fun List<MsgBean>.toView():String{
     var toReturn:String=""
     this.forEach{toReturn+="${it.user.login}:\n${it.text}\n\n"}
     return toReturn
