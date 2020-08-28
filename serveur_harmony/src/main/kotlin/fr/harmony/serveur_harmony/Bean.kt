@@ -6,7 +6,7 @@ import fr.harmony.serveur_harmony.ResponseApiEnumBean.OK
 data class UserBean(val id: Int? = null, var login: String?, var pwd: String?, var idSession: Long? = null)
 
 //Class MsgBean
-data class MsgBean(val id: Int? = null, val text: String, var date: String? = null, val user: UserBean)
+data class MsgBean(val id: Int? = null, val text: String, var date: Long? = null, val user: UserBean)
 
 //Class ResponseApiBean
 data class ResponseApiBean(val code: Int, val msg: String)
@@ -20,9 +20,11 @@ public enum class ResponseApiEnumBean(val rab: ResponseApiBean) {
     OK(ResponseApiBean(200, "OK")),
     USER_OK(ResponseApiBean(201, "User OK")),
     ID_SESS_OK(ResponseApiBean(202, "ID Session OK")),
-    MSG_OK(ResponseApiBean(203, "Message OK")),
     MSG_LIST_OK(ResponseApiBean(204, "Message List OK")),
     ERR_EXIST_LOG(ResponseApiBean(301, "Login already used")),
     ERR_UNKNOW_USER(ResponseApiBean(304, "User unknow")),
-    ERR_WRONG_PWD(ResponseApiBean(305, "Wrong Password"))
+    ERR_WRONG_PWD(ResponseApiBean(305, "Wrong Password")),
+    ERR_UNKNOW_ERR(ResponseApiBean(306, "Erreur inconnue"))
 }
+
+class MyException(val responseApiBean: ResponseApiBean) : Exception(responseApiBean.msg)

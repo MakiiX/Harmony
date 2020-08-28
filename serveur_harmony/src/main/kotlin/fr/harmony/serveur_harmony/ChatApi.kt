@@ -4,7 +4,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
+
+//TODO println chaque start requêtes
+//TODO Gérer tous les try catch
 
 /* register & login
 {
@@ -17,17 +21,19 @@ import org.springframework.web.bind.annotation.RestController
 
 /*
 {
-    "id":null,
-    "text":"Mon superbe message",
-    "date":"08/08/1992",
-    "user":{
-             "id":null,
-             "login":"Toto",
-             "pwd":"motdepasse85",
-             "idSession":null
-            }
+  "id": null,
+  "text": "Mon superbe message",
+  "date": null,
+  "user": {
+    "id": null,
+    "login": null,
+    "pwd": null,
+    "idSession": 2951871338625046000
+  }
 }
 */
+
+
 
 //Indique que c'est un webService
 @RestController
@@ -45,14 +51,16 @@ class ChatApi {
     fun register(@RequestBody user: UserBean): DataPackaged {
 
         println("Tentative d'enregistrement...")
-        if (checkLoginDoublon(user)) {
-            return DataPackaged(ResponseApiEnumBean.ERR_EXIST_LOG.rab)
-        }
-        //Ajoute l'user dans la base de données
-        else {
+        try {
             addUser(user)
             return DataPackaged(ResponseApiEnumBean.OK.rab)
+        } catch (e: MyException) {
+            return DataPackaged(e.responseApiBean)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_ERR.rab)
         }
+
     }
 
     //Connecte l'utilisateur et lui reconnais un idSession
@@ -72,17 +80,36 @@ class ChatApi {
         else {
             val userOnList = listUser.find { it.login == user.login && it.pwd == user.pwd }
             userOnList!!.idSession = randomIdSession()
-            return DataPackaged(ResponseApiEnumBean.OK.rab, userOnList)
+            return DataPackaged(ResponseApiEnumBean.USER_OK.rab, userOnList)
         }
     }
 
+    //Réceptionne un message d'un utilisateur, lui donne une date et l'ajoute à la liste des messages (BDD)
     @PostMapping("/sendMsg")
     fun receiveMsg(@RequestBody msg: MsgBean): DataPackaged {
 
-        msg.date = getCurrentDate()//Ajouter une date
-        listMsgs.add(msg)//Ajouter le msg dans la liste
+        println("/sendMsg \n msg = $msg")
 
-        return DataPackaged(ResponseApiEnumBean.MSG_OK.rab, msg = msg)
+        try {
+            //Rechercher l'user grace à l' idSession
+            val idSessionMsg = msg.user.idSession
+            val userOnList = getUserBySession(idSessionMsg)
+
+            if (userOnList == null) {
+                return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_USER.rab)
+            } else {
+                //Ajouter la date puis le msg à la liste
+                msg.date = Date().time//Ajoute la date en format Long
+                listMsgs.add(msg)//Ajouter le msg dans la liste
+
+                return DataPackaged(ResponseApiEnumBean.OK.rab)
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_ERR.rab)
+        }
+
     }
 
     //Retourne un DataPackaged avec la liste des messages
