@@ -31,7 +31,7 @@ class ChatControler : ChatEventI {
     override fun onBtEnvoyerClick(message: String) {
         try {
             sendMsg(MsgBean(text = message, user = UserBean(idSession = userConnected!!.idSession)),userConnected)
-            ihm.updateMessagesList(requestListMsg().toView())
+            onBtRafraichirClick()
         }catch (erreur:Exception) {
             erreur.printStackTrace()
             ihm.updateError("${erreur.message}")
@@ -56,21 +56,15 @@ class ChatControler : ChatEventI {
      */
     override fun onBtConnexionClick(pseudo: String, mdp: String) {
         val usr=UserBean(login = pseudo, pwd = mdp)
-        if(!pseudo.isNullOrBlank()&&!mdp.isNullOrBlank()){
-            try {
-                login(usr)
-                ihm.updateMessagesList("<b><font color=\"green\">Connecté</font></b><br />")
-                ihm.setConnectedState(true)
-                userConnected=usr
-            } catch (erreur: Exception) {
-                erreur.printStackTrace()
-                ihm.updateError("${erreur.message}")
-            }
-        }else{
-            ihm.updateError("Veuillez remplir les champs")
+        try {
+            login(usr)
+            ihm.updateMessagesList("<b><font color=\"green\">Connecté</font></b><br />")
+            ihm.setConnectedState(true)
+            userConnected=usr
+        } catch (erreur: Exception) {
+            erreur.printStackTrace()
+            ihm.updateError("${erreur.message}")
         }
-
-
     }
 
     /**
@@ -84,8 +78,7 @@ class ChatControler : ChatEventI {
             register(usr)
             login(usr)
             ihm.updateMessagesList("<b><font color=\"blue\">inscrit</font></b><br />")
-            userConnected=usr
-            ihm.setConnectedState(true)
+            onBtConnexionClick(pseudo, mdp)
         }catch (erreur:Exception) {
             erreur.printStackTrace()
             ihm.updateError("${erreur.message}")
