@@ -1,6 +1,5 @@
 package fr.harmony.serveur_harmony
 
-import java.text.SimpleDateFormat
 import kotlin.random.Random
 
 
@@ -20,7 +19,7 @@ fun checkPwd(user: UserBean): Boolean? {
 
 fun addUser(user: UserBean) {
     if (user.login.isNullOrBlank()) {
-        throw MyException(ResponseApiEnumBean.ERR_UNKNOW_USER.rab)
+        throw MyException(ResponseApiEnumBean.ERR_UNKNOWN_USER.rab)
     }
     listUser.add(user)
 }

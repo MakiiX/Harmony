@@ -29,7 +29,7 @@ class ChatApi {
             return DataPackaged(e.responseApiBean)
         } catch (e: Exception) {
             e.printStackTrace()
-            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_ERR.rab)
+            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOWN_ERR.rab)
         }
 
     }
@@ -44,7 +44,7 @@ class ChatApi {
             val check = checkPwd(user)
 
             //Vérifie si le nom user est bien déjà enregistrer
-            if (check == null) return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_USER.rab)
+            if (check == null) return DataPackaged(ResponseApiEnumBean.ERR_UNKNOWN_USER.rab)
 
             //Vérifie le mot de passe
             else if (check == false) return DataPackaged(ResponseApiEnumBean.ERR_WRONG_PWD.rab)
@@ -57,7 +57,7 @@ class ChatApi {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_ERR.rab)
+            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOWN_ERR.rab)
         }
 
     }
@@ -73,9 +73,10 @@ class ChatApi {
             val userOnList = getUserBySession(idSessionMsg)
 
             if (userOnList == null) {
-                return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_USER.rab)
+                return DataPackaged(ResponseApiEnumBean.ERR_UNKNOWN_USER.rab)
             } else {
-                //Ajouter la date puis le msg à la liste
+                //Ajouter le login, la date puis le msg à la liste
+                msg.user.login = userOnList.login
                 msg.date = Date().time//Ajoute la date en format Long
                 listMsgs.add(msg)//Ajouter le msg dans la liste
 
@@ -84,7 +85,7 @@ class ChatApi {
 
         } catch (e: Exception) {
             e.printStackTrace()
-            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_ERR.rab)
+            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOWN_ERR.rab)
         }
 
     }
@@ -98,7 +99,7 @@ class ChatApi {
 
         } catch (e: Exception) {
             e.printStackTrace()
-            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOW_ERR.rab)
+            return DataPackaged(ResponseApiEnumBean.ERR_UNKNOWN_ERR.rab)
         }
     }
 }
