@@ -32,6 +32,7 @@ class ChatControler : ChatEventI {
         try {
             sendMsg(MsgBean(text = message, user = UserBean(idSession = userConnected!!.idSession)),userConnected)
             onBtRafraichirClick()
+            ihm.clearSendMessage()
         }catch (erreur:Exception) {
             erreur.printStackTrace()
             ihm.updateError("${erreur.message}")
